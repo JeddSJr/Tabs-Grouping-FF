@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const button = document.getElementById('groupTabsButton');
+    //const button = document.getElementById('groupTabsButton');
+    const form = document.getElementById('formGroup')
     const searchTerm = document.getElementById('searchTerm');
 
-    button.addEventListener('click', () => {
+    form.addEventListener("submit", (event) => {
+
         const searchTermValue = searchTerm.value.toLowerCase().trim()
 
         if (searchTermValue) {
@@ -16,10 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             matchingTabs.push(tab)
                         }
                     })
-                    groupTabs(matchingTabs);
+                    groupTabs(matchingTabs)
                 }
             })
         }
+        event.preventDefault()
     })
 })
 
