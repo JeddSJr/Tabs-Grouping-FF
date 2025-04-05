@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchTerm = document.getElementById('searchTerm');
 
     button.addEventListener('click', () => {
-        const searchTermValue = searchTerm.value;
+        const searchTermValue = searchTerm.value.toLowerCase().trim()
 
         if (searchTermValue) {
             //console.log(`Searching for: ${searchTermValue}`);
@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
             chrome.tabs.query({}).then((tabs) => {
                 if (tabs.length !== 0) {
                     tabs.forEach((tab) => {
-                        if (tab.url.includes(searchTermValue) || tab.title.includes(searchTermValue)) {
+                        if (tab.url.toLowerCase().includes(searchTermValue) || tab.title.toLowerCase().includes(searchTermValue)) {
                             console.log(`Tab ID: ${tab.id}, Tab URL: ${tab.url}, Tab Title: ${tab.title}`);
-                            matchingTabs.push(tab);
+                            matchingTabs.push(tab)
                         }
                     })
                     groupTabs(matchingTabs);
