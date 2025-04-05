@@ -29,5 +29,5 @@ document.addEventListener('DOMContentLoaded', () => {
 function groupTabs(tabsArray) {
     tabsIDs = tabsArray.map((tab) => tab.id);
     //chrome.windows.create({ tabId: tabsIDs[0], focused: true })
-    browser.tabs.move(tabsIDs, { windowId: browser.windows.WINDOW_ID_CURRENT, index: 0 });
+    browser.tabs.move(tabsIDs, { windowId: browser.windows.WINDOW_ID_CURRENT, index: -1 });
 }
