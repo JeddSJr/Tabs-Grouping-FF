@@ -8,14 +8,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const searchTermValue = searchTerm.value.toLowerCase().trim()
 
         if (searchTermValue) {
-            //console.log(`Searching for: ${searchTermValue}`);
+            console.log(`Searching for: ${searchTermValue}`);
             matchingTabs = [];
             chrome.tabs.query({}).then((tabs) => {
                 if (tabs.length !== 0) {
                     tabs.forEach((tab) => {
-                        if (tab.url.toLowerCase().includes(searchTermValue) || tab.title.toLowerCase().includes(searchTermValue)) {
-                            console.log(`Tab ID: ${tab.id}, Tab URL: ${tab.url}, Tab Title: ${tab.title}`);
+                        //console.log(tab)
+                        if (typeof tab.url === 'string' && tab.url.toLowerCase().includes(searchTermValue)) {
                             matchingTabs.push(tab)
+                            //console.log(`Tab ID: ${tab.id}, Tab URL: ${tab.url}`);
+                        }
+                        else if (typeof tab.title == 'string' && tab.title.toLowerCase().includes(searchTermValue)) {
+                            matchingTabs.push(tab)
+                            //console.log(`Tab ID: ${tab.id}, Tab Title: ${tab.title}`);
                         }
                     })
                     groupTabs(matchingTabs)
@@ -26,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-function groupTabs(tabsArray) {
+async function groupTabs(tabsArray) {
     tabsIDs = tabsArray.map((tab) => tab.id);
-    //chrome.windows.create({ tabId: tabsIDs[0], focused: true })
     browser.tabs.move(tabsIDs, { windowId: browser.windows.WINDOW_ID_CURRENT, index: -1 });
+    //await chrome.windows.create({ focused: true }, function (win) { console.log("idslop") })
 }
